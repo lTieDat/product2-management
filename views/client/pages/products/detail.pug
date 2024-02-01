@@ -1,0 +1,27 @@
+extends ../../layout/default.pug
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                if(product.title)
+                    h1(class="mb-4") #{product.title}
+                    if(product.price)
+                        div(class="mb-4") Giá: <b>#{product.price} $ </b>
+                    if(product.discountPercentage)
+                        p(class="mb-4") Giảm giá: <b>#{product.discountPercentage} % </b>
+                    if(product.stock)
+                        div(class="mb-4") Số lượng: <b>#{product.stock} </b>
+                    if(product.thumbnail)
+                    div(class="mb-4")
+                        img(src= product.thumbnail , class="img-fluid")
+                    if(product.status)
+                        span Trạng thái: 
+                        if(product.status === "active")
+                            span(class="badge bg-success") Đang bán 
+                        else
+                            span(class="badge bg-error") Ngừng bán
+                    if(product.description) 
+                        div(class="mb-4") Mô tả: <b>#{product.description} </b>
+                
+                

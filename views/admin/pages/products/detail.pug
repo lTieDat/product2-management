@@ -1,0 +1,32 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+block main 
+    h1(class="mb-4") #{pageTitle}
+    h2(class="mb-4") #{product.name}
+    .row
+        .col-md-6
+            img(src=product.thumbnail, class="img-fluid")
+        .col-md-6
+            .form-group
+                label(for="name") Name
+                input#name.form-control(type="text", name="name", value=product.title, readonly)
+            .form-group
+                label(for="price") Price
+                input#price.form-control(type="text", name="price", value=product.price, readonly)
+            .form-group
+                label(for="description") Description
+                textarea#description.form-control(name="description", rows="5", readonly) #{product.description}
+            if(product.status)
+                span Trạng thái: 
+                    if (product.status === 'active')
+                        a(class ="badge bg-success") Còn hàng
+                    else
+                        a(class ="badge bg-danger") Hết hàng 
+            .form-group
+                label(for="createdAt") Created At
+                input#createdAt.form-control(type="text", name="createdAt", value=product.createdAt, readonly)
+            .form-group
+                label(for="updatedAt") Updated At
+                input#updatedAt.form-control(type="text", name="updatedAt", value=product.updatedAt, readonly)  
+            a(class="btn btn-warning", href=`/admin/products/edit/${product._id}`) Chỉnh sửa 
+    script(src="/admin/js/product.js") 
