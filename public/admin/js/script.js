@@ -179,3 +179,41 @@ if(uploadImage){
     
 };
 //end upload image
+
+//sort
+const sort = document.querySelector("[sort]");
+if(sort){
+    let url = new URL(window.location.href);
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+    sortSelect.addEventListener("change",(e)=>{      
+        const value = e.target.value;
+        const sortKey = value.split("-")[0];
+        const sortValue = value.split("-")[1];
+        url.searchParams.set("sortKey",sortKey);
+        url.searchParams.set("sortValue",sortValue);
+        
+        window.location.href = url.href;
+    });
+    sortClear.addEventListener("click",()=>{
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+        window.location.href = url.href;
+    });
+    const sortkey= url.searchParams.get("sortKey");
+    const sortValue= url.searchParams.get("sortValue");
+    if(sortkey && sortValue){   
+        const stringSort =`${sortkey}-${sortValue}`;
+        const optionSelected = sortSelect.querySelector(`option[value="${stringSort}"]`);
+        if(optionSelected){
+            optionSelected.selected = true;
+        }
+        else{
+            const optionDefault = sortSelect.querySelector(`option[value="default"]`);
+            optionDefault.selected = true;
+        }
+    }
+    //thêm select cho option
+} 
+
+//end sort

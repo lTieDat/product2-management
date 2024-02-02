@@ -26,6 +26,7 @@ router.post(
 router.patch(
     '/edit/:id',
     upload.single('thumbnail'),
+    uploadCloud.upload,
     validate.createPost,
     controller.editPath
 );
