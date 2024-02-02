@@ -1,12 +1,16 @@
 const homeRouter = require('express');
 const multer = require('multer');
-const storageMulter = require('../../helpers/storageMulter.js');
+// lưu file ở local - không dùng khi deploy
+// const storageMulter = require('../../helpers/storageMulter.js');
+// const upload = multer(
+//     { storage: storageMulter()}
+// );
 const controller = require('../../controller/admin/products.controller.js')
 const validate = require('../../validate/admin/product.validate.js');
 const router = homeRouter.Router();
-const upload = multer(
-    { storage: storageMulter()}
-);
+const upload = multer();
+const uploadCloud = require('../../middlewares/admin/uploadCloud.middlewares.js');
+
 router.get('/', controller.product);
 router.patch('/change-status/:status/:id', controller.changeStatus);
 router.patch('/change-multi', controller.changeMulti);
@@ -15,6 +19,7 @@ router.get('/create', controller.create);
 router.post(
     '/create',
     upload.single('thumbnail'),
+    uploadCloud.upload,
     validate.createPost,
     controller.createPost
 );

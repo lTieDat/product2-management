@@ -146,8 +146,8 @@ module.exports.createPost = async (req, res) => {
         else{
             req.body.discount = parseInt(req.body.discount);
         }
-        if(req.file)
-            req.body.thumbnail = `/uploads/${req.file.filename}`;
+        // if(req.file)
+        //     req.body.thumbnail = `/uploads/${req.file.filename}`;
         console.log(req.body.discount);
         const newProduct = new Product(req.body);
         newProduct.discountPercentage = req.body.discount;
