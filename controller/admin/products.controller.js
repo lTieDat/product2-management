@@ -6,7 +6,6 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 module.exports.product = async (req, res) => {
     const filterStatus = filterStatusHelper(req.query);
-    console.log(filterStatus);
     let find = {
         deleted: false
     };
