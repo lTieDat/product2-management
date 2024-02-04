@@ -9,9 +9,9 @@ if(buttonChangeStatus.length>0){
             const id = button.getAttribute("data-id");
             let statusChange = currentStatus == 'active' ?  'deactive' : 'active';
             const action = pathForm + `/${statusChange}/${id}?_method=PATCH`;
+            console.log(action);
             formChangeStatus.action = action; 
-            formChangeStatus.submit();
-            
+            formChangeStatus.submit();         
         });
     });
 };

@@ -6,6 +6,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 module.exports.product = async (req, res) => {
     const filterStatus = filterStatusHelper(req.query);
+    console.log(filterStatus);
     let find = {
         deleted: false
     };
@@ -226,7 +227,7 @@ module.exports.editPath = async (req, res) => {
         await Product.updateOne(
             { _id: req.params.id }, req.body
         );
-        req.flash('success', 'Đã cập nhật sản phẩm');
+        req.flash('success', 'Đã cập nhật sản phẩm thành công');
     } catch (error) {
         req.flash('error', 'Cập nhật thất bại');
     }

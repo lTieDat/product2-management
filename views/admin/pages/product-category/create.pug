@@ -1,11 +1,11 @@
 extends ../../layout/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/selectTree.pug
 block main 
     +alert-error(3000)
-    h1(class="mb-4") Thêm mới sản phẩm
+    h1(class="mb-4") Thêm mới danh mục
     form(
-        action =`${prefixAdmin}/products/create`
-        id="form-create-product"
+        action =`${prefixAdmin}/products-category/create`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -18,6 +18,16 @@ block main
                     name="title"
                     required
             )
+        div(class="form-group")
+            label(for="parentID") Danh mục cha
+                select(
+                    id="parentID"
+                    name="parentID"
+                    class="form-control"
+                )
+                    option(value="") ---Lựa chọn danh mục gốc---
+                    if(records)
+                        +select-tree(records)
         div(class ="form-group")
             label(for="description") Mô tả
             textarea(
@@ -25,37 +35,6 @@ block main
                     id="desc"
                     name="description"
                     rows="5"
-            )
-
-        div(class ="form-group")
-            label(for="price") Giá
-            input(
-                type="text"
-                class="form-control"
-                id="price"
-                name="price"
-                value="0"
-                min="0"
-            )
-        div(class ="form-group")
-            label(for="discount") %Giảm giá
-            input(
-                type="text"
-                class="form-control"
-                id="discount"
-                name="discount"
-                value="0"
-                min="0"
-            )
-        div(class ="form-group")
-            label(for="stock") Số lượng 
-            input(
-                type="text"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value="0"
-                min="0"
             )
         div(class ="form-group" upload-image)
             label(for="thumbnail") Hình ảnh
@@ -98,7 +77,7 @@ block main
                 value="active"
                 checked
             )
-            label(for="statusActive" class="form-check-label") Còn hàng
+            label(for="statusActive" class="form-check-label") Hoạt động
         div(class ="form-group form-check form-check-inline")
             input(
                 type="radio"
@@ -108,10 +87,9 @@ block main
                 value="deactive"
                 checked
             )
-            label(for="statusDeactive" class="form-check-label") Hết hàng
+            label(for="statusDeactive" class="form-check-label") không hoạt động
         div(class ="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
             ) Thêm mới
-    script(src="/admin/js/product.js") 

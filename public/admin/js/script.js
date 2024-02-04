@@ -92,8 +92,6 @@ if(formChangeMulti){
         event.preventDefault();
         const checkBoxMulti = document.querySelector("[checkbox-multi]");
         const inputChecked = checkBoxMulti.querySelectorAll('input[name="id"]:checked');
-        
-        
         //delete all
         const type = event.target.elements.type.value;
         if(type === "delete-all"){

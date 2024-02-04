@@ -22,6 +22,10 @@ app.use(methodOverride('_method'));
 require('dotenv').config();
 const port = process.env.PORT ;
 
+//gan thư viện tinymce
+const path=require('path');
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 //gan database
 const database = require('./config/database.js');
 database.connect();
@@ -39,7 +43,6 @@ app.use(express.static(`${__dirname}/public`));
 //gán view 
 //local:
 // app.set('views', './views');
-
 // deploy:
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
