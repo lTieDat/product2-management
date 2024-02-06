@@ -106,10 +106,15 @@ module.exports.edit = async (req, res) => {
             _id: req.params.id,
             deleted: false
         }
-        const record = await ProductCategory.findOne(find);
+        const data = await ProductCategory.findOne(find);
+        const records= await ProductCategory.find({
+            deleted: false
+        });
+        const newRecords = treeHelper.tree(records);
         res.render("admin/pages/product-category/edit", {
             pageTitle: "Chỉnh sửa danh mục sản phẩm",
-            record: record
+            data: data,
+            records: newRecords
         })
     } catch (e) {
         req.flash('error', 'Không tìm thấy danh mục sản phẩm');

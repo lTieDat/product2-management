@@ -4,6 +4,8 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const objectSearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
+const createTreeHelper = require("../../helpers/createTree");
+const ProductCategory = require("../../models/product-category.model");
 module.exports.product = async (req, res) => {
     const filterStatus = filterStatusHelper(req.query);
     let find = {
@@ -129,8 +131,14 @@ module.exports.deleteItem = async (req, res) => {
 
 // GET /admin/products/create
 module.exports.create = async (req, res) => {
+    let find ={
+        deleted: false
+    };
+    const records= await ProductCategory.find(find);
+    const newRecords = createTreeHelper.tree(records);
     res.render("admin/pages/products/create.pug", {
-        pageTitle: "them san pham",
+        pageTitle: "Thêm sản phẩm mới",
+        records: newRecords
     });
 };
 
@@ -181,10 +189,15 @@ module.exports.editById = async (req, res) => {
             _id: req.params.id,
             deleted: false
         }
+        const records= await ProductCategory.find({
+            deleted: false
+        });
+        const newRecords = createTreeHelper.tree(records);
         const product = await Product.findOne(find);
         res.render(`admin/pages/products/edit.pug`, {
             pageTitle: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            records: newRecords
         });
     } catch (e) {
         req.flash('error', 'Không tìm thấy sản phẩm');
@@ -241,9 +254,13 @@ module.exports.productDetail = async (req, res) => {
             deleted: false
         }
         const product = await Product.findOne(find);
+        const productCategory = await ProductCategory.findOne({
+            _id: product.category
+        });
         res.render(`admin/pages/products/detail.pug`, {
             pageTitle: "Chi tiết sản phẩm",
-            product: product
+            product: product,
+            productCategory: productCategory
         });
     } catch (e) {
         req.flash('error', 'Không tìm thấy sản phẩm');

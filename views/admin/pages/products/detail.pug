@@ -10,6 +10,9 @@ block main
             .form-group
                 label(for="name") Name
                 input#name.form-control(type="text", name="name", value=product.title, readonly)
+            .form-group     
+                label(for="category") Category
+                    div(class=mb-4) #{productCategory.title}
             .form-group
                 label(for="price") Price
                 div(class="mb-4") #{product.price} $ 
