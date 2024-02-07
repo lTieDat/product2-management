@@ -1,0 +1,84 @@
+extends ../../layout/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+block main
+    +alert-success(2000)            
+    h1 Quản lý danh sách tài khoản
+    .card.mb-3
+        .card-header  Danh sách 
+            .card-body 
+                .row 
+                    .col-8 
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/accounts/create`
+                            class ="btn btn-outline-success"
+                        ) + Thêm mới
+                table(class="table table-hover table-sm")
+                    thead
+                        tr
+                            th STT
+                            th Avatar
+                            th Họ và tên
+                            th Quyền
+                            th Email
+                            th Trạng thái
+                            th Thao tác
+                    tbody
+                        each account, index in records
+                            tr
+                                td= index + 1
+                                td 
+                                    img(
+                                        src=account.avatar
+                                        alt=account.fullName
+                                        width ="100px"
+                                        height ="auto"
+                                    )
+                                
+                                td= account.fullName
+                                td #{account.role.title}
+                                td= account.email
+                                td 
+                                    if (account.status === 'active')
+                                        a(href="javascript:;" 
+                                        data-status = account.status
+                                        data-id     = account.id
+                                        button-change-status
+                                        class ="badge bg-success") Đang hoạt động
+                                    else
+                                        a(href="javascript:;" 
+                                        button-change-status
+                                        data-status = account.status
+                                        data-id     = account.id
+                                        class ="badge bg-danger") Ngung hoạt động
+                                td  
+                                    a(  href=`${prefixAdmin}/accounts/detail/${account.id}`
+                                            class ="btn btn-secondary btn-sm"     
+                                    ) Chi tiết
+                                    a(href=`${prefixAdmin}/accounts/edit/${account.id}`
+                                           class ="btn btn-warning btn-sm"     
+                                    ) Sửa
+                                    button(
+                                        class='btn btn-danger btn-sm ml-1'
+                                        data-id= account.id
+                                        button-delete
+                                    ) Xóa 
+    form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/accounts/change-status`
+    )
+    //- delete item form
+    form(
+        action =""
+        method="POST"
+        id="form-delete-item"
+        data-path=`${prefixAdmin}/accounts/delete-item`
+    )
+    script(src="/admin/js/product.js")
