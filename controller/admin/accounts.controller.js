@@ -32,7 +32,7 @@ module.exports.create = async(req, res) => {
     });
 }
 
-// [POST] /admin/accounts/create
+// [POST] /admin/accounts/createPost
 module.exports.postCreate = async (req, res) => {
     const emailExist = await Account.findOne({
         email: req.body.email,
@@ -60,4 +60,52 @@ module.exports.changeStatus = async (req, res) => {
     req.flash('success', 'Đã thay đổi trạng thái tai khoản thành công');
     res.redirect("back");
 };
- 
+
+// [GET] /admin/accounts/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const record = await Account.findOne(
+            { _id: id }
+        );
+        const roles = await Role.find(
+            {deleted: false}
+        );
+        res.render('admin/pages/accounts/edit',{
+            pageTitle: "Sửa tài khoản người dùng",
+            record: record,
+            roles: roles
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    }
+}
+
+// [PATCH] /admin/accounts/edit/:id
+module.exports.postEdit = async (req, res) => {
+    const id = req.params.id;
+    const emailExist = await Account.findOne({
+        _id:{ $ne: id},
+        email: req.body.email,
+        deleted: false
+    });
+    const result = emailExist.email;
+    if(emailExist){
+        req.flash('error', `Email ${result} đã tồn tại`);
+        res.redirect("back");
+    }else{
+        if(req.body.password){
+            req.body.password = md5(req.body.password);
+
+        }else{
+            delete req.body.password;
+        }
+        await Account.updateOne(
+            { _id: req.params.id },
+            req.body
+        );
+        req.flash('success', 'Sửa tài khoản thành công'); 
+        res.redirect("back");
+    }
+    
+};

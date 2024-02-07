@@ -8,6 +8,7 @@ const accountSchema = new mongoose.Schema({
         type: String,
         default: generate.genenrateRandomString(20)
     },
+    phone: String,
     avatar: String,
     role_id: String,
     status:String,

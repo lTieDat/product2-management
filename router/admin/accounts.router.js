@@ -15,5 +15,12 @@ router.post('/create',
         controller.postCreate
 );
 router.patch('/change-status/:status/:id', controller.changeStatus);
+router.get('/edit/:id', controller.edit);
+router.patch('/edit/:id', 
+        upload.single('avatar'), 
+        uploadCloud.upload, 
+        validate.editPath,
+        controller.postEdit
+);
 
 module.exports = router;
