@@ -4,118 +4,120 @@ include ../../mixins/selectTree.pug
 block main 
     +alert-error(3000)
     h1(class="mb-4") Chỉnh sửa danh mục sản phẩm
-    form(
-        action =`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class ="form-group")
-            label(for="") Tiêu đề
-            input(
-                    type="text"
-                    class="form-control"
-                    id="title"
-                    name="title"
-                    required
-                    value=data.title
-            ) 
-        div(class="form-group")
-            label(for="parentID") Danh mục cha
-                select(
-                    id="parentID"
-                    name="parentID"
-                    class="form-control"
-                )
-                    option(value="") ---Lựa chọn danh mục gốc---
-                    if(records)
-                        +select-tree(records,1, data.parentID)
-        div(class ="form-group")
-            label(for="description") Mô tả
-            textarea(
-                    class="form-control tinymce-textarea"
-                    id="desc"
-                    name="description"
-                    rows="5"
-                    value = data.description
+    if(role.permissions.includes('product_category_edit'))
+        if(data)
+            form(
+                action =`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
+                method="POST"
+                enctype="multipart/form-data"
             )
-        div(class ="form-group" upload-image)
-            label(for="thumbnail") Hình ảnh
-            input(
-                type="file"
-                class="form-control-file"
-                id="thumbnail"
-                name="thumbnail"
-                accept="image/*"
-                upload-image-input
-            )
-            img(
-                src=data.thumbnail
-                upload-image-preview
-                class="image-preview"
-            )
-        //- display button x to delete image
-        div(class="form-group" delete-image)
-            button(
-                type="button"
-                class="btn btn-danger btn-sm"
-                upload-image-delete
-            ) Xóa hình ảnh   
-        div(class ="form-group")
-            label(for="position")   Vị trí hiển thị
-            input(
-                type="text"
-                class="form-control"
-                id="position"
-                name="position"
-                placeholder ="Tự động tăng"
-                min="1"
-                value = data.position
-            )
-        if(data.status)
-            if(data.status === "active")
-                div(class ="form-group form-check form-check-inline")
+                div(class ="form-group")
+                    label(for="") Tiêu đề
                     input(
-                        type="radio"
-                        class="form-check-input"
-                        id="statusActive"
-                        name="status"
-                        value="active"
-                        checked = true
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            required
+                            value=data.title
+                    ) 
+                div(class="form-group")
+                    label(for="parentID") Danh mục cha
+                        select(
+                            id="parentID"
+                            name="parentID"
+                            class="form-control"
+                        )
+                            option(value="") ---Lựa chọn danh mục gốc---
+                            if(records)
+                                +select-tree(records,1, data.parentID)
+                div(class ="form-group")
+                    label(for="description") Mô tả
+                    textarea(
+                            class="form-control tinymce-textarea"
+                            id="desc"
+                            name="description"
+                            rows="5"
+                            value = data.description
                     )
-                    label(class="form-check-label" for="statusActive") Đang kinh doanh
-                div(class ="form-group form-check form-check-inline")
+                div(class ="form-group" upload-image)
+                    label(for="thumbnail") Hình ảnh
                     input(
-                        type="radio"
-                        class="form-check-input"
-                        id="statusActive"
-                        name="status"
-                        value="deactive"
-                        checked = false
+                        type="file"
+                        class="form-control-file"
+                        id="thumbnail"
+                        name="thumbnail"
+                        accept="image/*"
+                        upload-image-input
                     )
-                    label(class="form-check-label" for="statusActive") Ngừng kinh doanh
-            else
-                div(class ="form-group form-check form-check-inline")
+                    img(
+                        src=data.thumbnail
+                        upload-image-preview
+                        class="image-preview"
+                    )
+                //- display button x to delete image
+                div(class="form-group" delete-image)
+                    button(
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        upload-image-delete
+                    ) Xóa hình ảnh   
+                div(class ="form-group")
+                    label(for="position")   Vị trí hiển thị
                     input(
-                        type="radio"
-                        class="form-check-input"
-                        id="statusActive"
-                        name="status"
-                        value="active"
-                        checked = false
+                        type="text"
+                        class="form-control"
+                        id="position"
+                        name="position"
+                        placeholder ="Tự động tăng"
+                        min="1"
+                        value = data.position
                     )
-                    label(class="form-check-label" for="statusActive") Đang kinh doanh
-                div(class ="form-group form-check form-check-inline")
-                    input(
-                        type="radio"
-                        class="form-check-input"
-                        id="statusActive"
-                        name="status"
-                        value="deactive"
-                        checked = true
-                    )
-                    label(class="form-check-label" for="statusActive") Ngừng kinh doanh
-        div(class ="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Thêm mới
+                if(data.status)
+                    if(data.status === "active")
+                        div(class ="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusActive"
+                                name="status"
+                                value="active"
+                                checked = true
+                            )
+                            label(class="form-check-label" for="statusActive") Đang kinh doanh
+                        div(class ="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusActive"
+                                name="status"
+                                value="deactive"
+                                checked = false
+                            )
+                            label(class="form-check-label" for="statusActive") Ngừng kinh doanh
+                    else
+                        div(class ="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusActive"
+                                name="status"
+                                value="active"
+                                checked = false
+                            )
+                            label(class="form-check-label" for="statusActive") Đang kinh doanh
+                        div(class ="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusActive"
+                                name="status"
+                                value="deactive"
+                                checked = true
+                            )
+                            label(class="form-check-label" for="statusActive") Ngừng kinh doanh
+                div(class ="form-group")
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Thêm mới

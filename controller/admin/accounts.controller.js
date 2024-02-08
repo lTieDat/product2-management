@@ -89,9 +89,8 @@ module.exports.postEdit = async (req, res) => {
         email: req.body.email,
         deleted: false
     });
-    const result = emailExist.email;
     if(emailExist){
-        req.flash('error', `Email ${result} đã tồn tại`);
+        req.flash('error', `Email ${req.body.email} đã tồn tại`);
         res.redirect("back");
     }else{
         if(req.body.password){

@@ -3,126 +3,127 @@ include ../../mixins/alert.pug
 include ../../mixins/selectTree.pug
 block main 
     +alert-error(3000)
-    h1(class="mb-4") Thêm mới sản phẩm
-    form(
-        action =`${prefixAdmin}/products/create`
-        id="form-create-product"
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class ="form-group")
-            label(for="title") Tiêu đề
-            input(
+    if(role.permissions.includes('product_create'))
+        h1(class="mb-4") Thêm mới sản phẩm
+        form(
+            action =`${prefixAdmin}/products/create`
+            id="form-create-product"
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class ="form-group")
+                label(for="title") Tiêu đề
+                input(
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        required
+                )
+            div(class="form-group")
+                label(for="category") Danh mục 
+                    select(
+                        id="category"
+                        name="category"
+                        class="form-control"
+                    )
+                        option(value="") ---Lựa chọn danh mục ---
+                        if(records)
+                            +select-tree(records,1,"")
+            div(class ="form-group")
+                label(for="description") Mô tả
+                textarea(
+                        class="form-control tinymce-textarea"
+                        id="desc"
+                        name="description"
+                        rows="5"
+                )
+
+            div(class ="form-group")
+                label(for="price") Giá
+                input(
                     type="text"
                     class="form-control"
-                    id="title"
-                    name="title"
-                    required
-            )
-        div(class="form-group")
-            label(for="category") Danh mục 
-                select(
-                    id="category"
-                    name="category"
-                    class="form-control"
+                    id="price"
+                    name="price"
+                    value="0"
+                    min="0"
                 )
-                    option(value="") ---Lựa chọn danh mục ---
-                    if(records)
-                        +select-tree(records,1,"")
-        div(class ="form-group")
-            label(for="description") Mô tả
-            textarea(
-                    class="form-control tinymce-textarea"
-                    id="desc"
-                    name="description"
-                    rows="5"
-            )
-
-        div(class ="form-group")
-            label(for="price") Giá
-            input(
-                type="text"
-                class="form-control"
-                id="price"
-                name="price"
-                value="0"
-                min="0"
-            )
-        div(class ="form-group")
-            label(for="discount") %Giảm giá
-            input(
-                type="text"
-                class="form-control"
-                id="discount"
-                name="discount"
-                value="0"
-                min="0"
-            )
-        div(class ="form-group")
-            label(for="stock") Số lượng 
-            input(
-                type="text"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value="0"
-                min="0"
-            )
-        div(class ="form-group" upload-image)
-            label(for="thumbnail") Hình ảnh
-            input(
-                type="file"
-                class="form-control-file"
-                id="thumbnail"
-                name="thumbnail"
-                accept="image/*"
-                upload-image-input
-            )
-            img(
-                src=""
-                upload-image-preview
-                class="image-preview"
-            )
-        //- display button x to delete image
-        div(class="form-group" delete-image)
-            button(
-                type="button"
-                class="btn btn-danger btn-sm"
-                upload-image-delete
-            ) Xóa hình ảnh   
-        div(class ="form-group")
-            label(for="position")   Vị trí hiển thị
-            input(
-                type="text"
-                class="form-control"
-                id="position"
-                name="position"
-                placeholder ="Tự động tăng"
-                min="1"
-            )
-        div(class ="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked
-            )
-            label(for="statusActive" class="form-check-label") Còn hàng
-        div(class ="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusDeactive"
-                name="status"
-                value="deactive"
-                checked
-            )
-            label(for="statusDeactive" class="form-check-label") Hết hàng
-        div(class ="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Thêm mới
-    script(src="/admin/js/product.js") 
+            div(class ="form-group")
+                label(for="discount") %Giảm giá
+                input(
+                    type="text"
+                    class="form-control"
+                    id="discount"
+                    name="discount"
+                    value="0"
+                    min="0"
+                )
+            div(class ="form-group")
+                label(for="stock") Số lượng 
+                input(
+                    type="text"
+                    class="form-control"
+                    id="stock"
+                    name="stock"
+                    value="0"
+                    min="0"
+                )
+            div(class ="form-group" upload-image)
+                label(for="thumbnail") Hình ảnh
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="thumbnail"
+                    name="thumbnail"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+            //- display button x to delete image
+            div(class="form-group" delete-image)
+                button(
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    upload-image-delete
+                ) Xóa hình ảnh   
+            div(class ="form-group")
+                label(for="position")   Vị trí hiển thị
+                input(
+                    type="text"
+                    class="form-control"
+                    id="position"
+                    name="position"
+                    placeholder ="Tự động tăng"
+                    min="1"
+                )
+            div(class ="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="active"
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Còn hàng
+            div(class ="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusDeactive"
+                    name="status"
+                    value="deactive"
+                    checked
+                )
+                label(for="statusDeactive" class="form-check-label") Hết hàng
+            div(class ="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Thêm mới
+        script(src="/admin/js/product.js") 

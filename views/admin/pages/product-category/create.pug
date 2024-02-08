@@ -4,92 +4,93 @@ include ../../mixins/selectTree.pug
 block main 
     +alert-error(3000)
     h1(class="mb-4") Thêm mới danh mục
-    form(
-        action =`${prefixAdmin}/products-category/create`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class ="form-group")
-            label(for="title") Tiêu đề
-            input(
+    if(role.permissions.includes('product_category_create'))
+        form(
+            action =`${prefixAdmin}/products-category/create`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class ="form-group")
+                label(for="title") Tiêu đề
+                input(
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        required
+                )
+            div(class="form-group")
+                label(for="parentID") Danh mục cha
+                    select(
+                        id="parentID"
+                        name="parentID"
+                        class="form-control"
+                    )
+                        option(value="") ---Lựa chọn danh mục gốc---
+                        if(records)
+                            +select-tree(records)
+            div(class ="form-group")
+                label(for="description") Mô tả
+                textarea(
+                        class="form-control tinymce-textarea"
+                        id="desc"
+                        name="description"
+                        rows="5"
+                )
+            div(class ="form-group" upload-image)
+                label(for="thumbnail") Hình ảnh
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="thumbnail"
+                    name="thumbnail"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+            //- display button x to delete image
+            div(class="form-group" delete-image)
+                button(
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    upload-image-delete
+                ) Xóa hình ảnh   
+            div(class ="form-group")
+                label(for="position")   Vị trí hiển thị
+                input(
                     type="text"
                     class="form-control"
-                    id="title"
-                    name="title"
-                    required
-            )
-        div(class="form-group")
-            label(for="parentID") Danh mục cha
-                select(
-                    id="parentID"
-                    name="parentID"
-                    class="form-control"
+                    id="position"
+                    name="position"
+                    placeholder ="Tự động tăng"
+                    min="1"
                 )
-                    option(value="") ---Lựa chọn danh mục gốc---
-                    if(records)
-                        +select-tree(records)
-        div(class ="form-group")
-            label(for="description") Mô tả
-            textarea(
-                    class="form-control tinymce-textarea"
-                    id="desc"
-                    name="description"
-                    rows="5"
-            )
-        div(class ="form-group" upload-image)
-            label(for="thumbnail") Hình ảnh
-            input(
-                type="file"
-                class="form-control-file"
-                id="thumbnail"
-                name="thumbnail"
-                accept="image/*"
-                upload-image-input
-            )
-            img(
-                src=""
-                upload-image-preview
-                class="image-preview"
-            )
-        //- display button x to delete image
-        div(class="form-group" delete-image)
-            button(
-                type="button"
-                class="btn btn-danger btn-sm"
-                upload-image-delete
-            ) Xóa hình ảnh   
-        div(class ="form-group")
-            label(for="position")   Vị trí hiển thị
-            input(
-                type="text"
-                class="form-control"
-                id="position"
-                name="position"
-                placeholder ="Tự động tăng"
-                min="1"
-            )
-        div(class ="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked
-            )
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class ="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusDeactive"
-                name="status"
-                value="deactive"
-                checked
-            )
-            label(for="statusDeactive" class="form-check-label") không hoạt động
-        div(class ="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Thêm mới
+            div(class ="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="active"
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class ="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusDeactive"
+                    name="status"
+                    value="deactive"
+                    checked
+                )
+                label(for="statusDeactive" class="form-check-label") không hoạt động
+            div(class ="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Thêm mới

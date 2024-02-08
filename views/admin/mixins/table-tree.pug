@@ -37,13 +37,15 @@ mixin table-tree(records, level =1)
                     data-id     = product.id
                     class ="badge bg-danger") Ngừng kinh doanh
             td  
-                a(
-                    href=`${prefixAdmin}/products-category/edit/${product.id}`
-                    class ="btn btn-warning btn-sm"     
-                ) Sửa
-                button(
-                    class='btn btn-danger btn-sm ml-1'
-                    data-id= product.id
-                    button-delete) Xóa 
+                if(role.permissions.includes('product-category_edit'))
+                    a(
+                        href=`${prefixAdmin}/products-category/edit/${product.id}`
+                        class ="btn btn-warning btn-sm"     
+                    ) Sửa
+                if(role.permissions.includes('product-category_delete'))
+                    button(
+                        class='btn btn-danger btn-sm ml-1'
+                        data-id= product.id
+                        button-delete) Xóa 
         if product.children && product.children.length > 0
             +table-tree(product.children, level + 1)            
