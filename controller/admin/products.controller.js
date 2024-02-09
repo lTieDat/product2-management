@@ -46,7 +46,6 @@ module.exports.product = async (req, res) => {
 
     for (const product of products) {
         // lấy thông tin người tạo và thời gian
-        console.log(product.createdBy.account_id);
         const user = await Account.findOne({
             _id: product.createdBy.account_id
         });
