@@ -29,8 +29,6 @@ module.exports.product = async (req, res) => {
     else {
         sort.position = "desc";
     }
-
-
     //end object sort
 
     //pagination
@@ -47,11 +45,22 @@ module.exports.product = async (req, res) => {
         .skip(objectPagination.skip);
 
     for (const product of products) {
+        // lấy thông tin người tạo và thời gian
+        console.log(product.createdBy.account_id);
         const user = await Account.findOne({
             _id: product.createdBy.account_id
         });
         if(user){
             product.accountFullName = user.fullName;
+        }
+
+        // lấy thông tin người cập nhật và thời gian
+        const updatedBy = product.updatedBy[product.updatedBy.length-1];
+        if(updatedBy){
+            const userUpdated = await Account.findOne({
+                _id: updatedBy.account_id
+            });
+            updatedBy.accountFullName = userUpdated.fullName;
         }
     }  
     res.render("admin/pages/products/index.pug", {
@@ -67,10 +76,15 @@ module.exports.product = async (req, res) => {
 module.exports.changeStatus = async (req, res) => {
     const status = req.params.status;
     const id = req.params.id;
+    const updatedBy ={
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
+
     await Product.updateOne(
         { _id: id },
-        { status: status }
-    );
+        { status: status, $push :{updatedBy: updatedBy}
+    });
     req.flash('success', 'Đã thay đổi trạng thái sản phẩm');
     res.redirect("back");
 };
@@ -80,18 +94,22 @@ module.exports.changeMulti = async (req, res) => {
     // tai npm intall body-parser de convert data cua res.body
     const type = req.body.type;
     const ids = req.body.ids.split(",");
+    const updatedBy ={
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
     switch (type) {
         case "active":
             await Product.updateMany(
                 { _id: { $in: ids } },
-                { status: "active" }
+                { status: "active" , $push :{updatedBy: updatedBy}}
             );
             req.flash('success', `Đã thay đổi trạng thái ${ids.length} sản phẩm`);
             break;
         case "deactive":
             await Product.updateMany(
                 { _id: { $in: ids } },
-                { status: "deactive" }
+                { status: "deactive" , $push :{updatedBy: updatedBy}}
             );
             req.flash('success', `Đã thay đổi trạng thái ${ids.length} sản phẩm`);
             break;
@@ -103,7 +121,7 @@ module.exports.changeMulti = async (req, res) => {
                     , deletedBy:{
                         account_id: res.locals.user.id,
                         deletedAt: new Date()
-                    }
+                    }, $push :{updatedBy: updatedBy}
                 }          
             );
             req.flash('success', `Đã xóa ${ids.length} sản phẩm`);
@@ -197,7 +215,6 @@ module.exports.createPost = async (req, res) => {
     newProduct.deleted = false;
     await newProduct.save();
     res.redirect(`${systemConfig.prefixAdmin}/products`);
-
 };
 
 //GET /admin/products/edit/:id
@@ -254,8 +271,14 @@ module.exports.editPath = async (req, res) => {
     if (req.file)
         req.body.thumbnail = `/uploads/${req.file.filename}`;
     try {
+        const updatedBy = {
+            account_id: res.locals.user.id,
+            updatedAt: new Date()
+        };
+
         await Product.updateOne(
-            { _id: req.params.id }, req.body
+            { _id: req.params.id }, 
+            {...req.body, $push :{updatedBy: updatedBy}}
         );
         req.flash('success', 'Đã cập nhật sản phẩm thành công');
     } catch (error) {

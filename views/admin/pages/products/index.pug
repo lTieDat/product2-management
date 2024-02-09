@@ -52,6 +52,7 @@ block main
                                 th Vị trí
                                 th Trạng thái
                                 th Người tạo
+                                th Người cập nhật lần cuối
                                 th Hành động
                             
                         tbody
@@ -97,6 +98,14 @@ block main
                                         p #{product.accountFullName}
                                         p 
                                             +formatDate(product.createdBy.createdAt)
+                                    td 
+                                        - const updatedBy= product.updatedBy.slice(-1)[0];
+                                        if(updatedBy)
+                                            p #{updatedBy.accountFullName}
+                                            p 
+                                                +formatDate(updatedBy.updatedAt)
+                                        else
+                                            p Chưa cập nhật
                                     td  
                                         a(
                                             href=`${prefixAdmin}/products/detail/${product.id}`

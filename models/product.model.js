@@ -32,6 +32,12 @@ const productSchema = new mongoose.Schema({
         },
         account_id:String
     },
+    updatedBy: [
+        {
+            updatedAt: Date, 
+            account_id:String
+        }
+    ],
     position: Number
 },{
     timestamps: true
