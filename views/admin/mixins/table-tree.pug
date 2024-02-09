@@ -1,3 +1,4 @@
+
 mixin table-tree(records, level =1)
     each product,index in records
         - const prefix = Array(level + 1 ).join('-- ')
@@ -36,6 +37,12 @@ mixin table-tree(records, level =1)
                     data-status =product.status
                     data-id     = product.id
                     class ="badge bg-danger") Ngừng kinh doanh
+            td
+                p #{product.accountFullName}
+                if(product.createdBy.createdAt)
+                    p #{moment(product.createdBy.createdAt).format("DD/MM/YYYY HH:mm:ss")}
+                else
+                    p Chưa cập nhật
             td  
                 if(role.permissions.includes('product-category_edit'))
                     a(

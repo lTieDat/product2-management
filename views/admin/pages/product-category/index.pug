@@ -6,6 +6,7 @@ include ../../mixins/change-multi-cate.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort_category.pug
 include ../../mixins/table-tree.pug
+include ../../mixins/moment.pug
 block main        
     if(role.permissions.includes('product-category_view'))
         h1 Danh mục sản phẩm
@@ -48,6 +49,7 @@ block main
                                 th Tiêu đề
                                 th Vị trí
                                 th Trạng thái
+                                th Người tạo
                                 th Hành động          
                         tbody
                             +table-tree(records)

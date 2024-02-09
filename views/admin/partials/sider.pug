@@ -1,19 +1,19 @@
 .sider 
     .inner-menu 
-        ul 
-            li 
+        ul
+            li
                 a(href=`${prefixAdmin}/dashBoard`) Tổng quan 
             if(role.permissions.includes('product-category_view'))
-                li 
+                li
                     a(href=`${prefixAdmin}/products-category`) Danh mục sản phẩm
             if(role.permissions.includes('product_view'))
                 li 
                     a(href=`${prefixAdmin}/products`) Danh sách sản phẩm
             if(role.permissions.includes('role_view'))
-                li  
+                li
                     a(href=`${prefixAdmin}/roles`) Nhóm quyền          
             if(role.permissions.includes('role_permission'))
-                li  
+                li
                     a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
             if(role.permissions.includes('account_view'))
                 li 

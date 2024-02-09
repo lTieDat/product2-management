@@ -6,6 +6,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
 module.exports.product = async (req, res) => {
     const filterStatus = filterStatusHelper(req.query);
     let find = {
@@ -44,6 +45,15 @@ module.exports.product = async (req, res) => {
         .sort(sort)
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
+
+    for (const product of products) {
+        const user = await Account.findOne({
+            _id: product.createdBy.account_id
+        });
+        if(user){
+            product.accountFullName = user.fullName;
+        }
+    }  
     res.render("admin/pages/products/index.pug", {
         pageTitle: "danh sach san pham",
         products: products,
@@ -90,8 +100,11 @@ module.exports.changeMulti = async (req, res) => {
                 { _id: { $in: ids } },
                 {
                     deleted: true
-                    , deletedAt: new Date()
-                }
+                    , deletedBy:{
+                        account_id: res.locals.user.id,
+                        deletedAt: new Date()
+                    }
+                }          
             );
             req.flash('success', `Đã xóa ${ids.length} sản phẩm`);
             break;
@@ -122,7 +135,10 @@ module.exports.deleteItem = async (req, res) => {
     await Product.updateOne(
         { _id: id }, {
         deleted: true,
-        deletedAt: new Date()
+        deletedBy:{
+            account_id: res.locals.user.id,
+            deletedAt: new Date()
+        }
     },
     );
     req.flash('success', `Đã xóa sản phẩm`);
@@ -171,9 +187,11 @@ module.exports.createPost = async (req, res) => {
     else {
         req.body.discount = parseInt(req.body.discount);
     }
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    };
     // if(req.file)
     //     req.body.thumbnail = `/uploads/${req.file.filename}`;
-    console.log(req.body.discount);
     const newProduct = new Product(req.body);
     newProduct.discountPercentage = req.body.discount;
     newProduct.deleted = false;

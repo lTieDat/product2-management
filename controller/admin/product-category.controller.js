@@ -4,6 +4,7 @@ const objectSearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const ProductCategory = require("../../models/product-category.model");
 const treeHelper = require("../../helpers/createTree");
+const Account = require("../../models/account.model");  
 // GET /admin/product-category
 module.exports.index = async(req,res)=>{
     const filterStatus = filterStatusHelper(req.query);
@@ -37,6 +38,14 @@ module.exports.index = async(req,res)=>{
     const records= await ProductCategory.find(find).sort(sort)
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
+    for(const record of records){
+        const user = await Account.findOne({
+            _id:  record.createdBy.account_id
+        });
+        if(user){
+            record.accountFullName = user.fullName;
+        }
+    }
     const newRecords = treeHelper.tree(records);
      res.render("admin/pages/product-category/index",{
         pageTitle: "Product Category",
@@ -69,6 +78,9 @@ module.exports.createPost = async (req, res) => {
     else{
         req.body.position = parseInt(req.body.position);
     }
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    };
     const record = new ProductCategory(req.body);
     await record.save();
     return res.redirect(`${systemConfig.prefixAdmin}/products-category`);

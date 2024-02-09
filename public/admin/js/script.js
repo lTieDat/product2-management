@@ -215,3 +215,7 @@ if(sort){
 } 
 
 //end sort
+
+//sidebar
+
+//end sidebar

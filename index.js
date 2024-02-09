@@ -6,6 +6,9 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//gan thu vien moment
+const moment = require('moment');
+app.locals.moment = moment;
 //gán thư viện popup thông báo cookie-parser và session cho thuw vieen express-flash
 const cookieParser = require('cookie-parser');
 const session = require('express-session');

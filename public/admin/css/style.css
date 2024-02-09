@@ -25,7 +25,7 @@
 
 .body .main{
     position: relative;
-    left: 150px; 
+    left: 180px; 
     width: calc(100% - 180px);
 }
 

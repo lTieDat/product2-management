@@ -4,7 +4,7 @@ include ../../mixins/selectTree.pug
 block main 
     +alert-error(3000)
     h1(class="mb-4") Thêm mới danh mục
-    if(role.permissions.includes('product_category_create'))
+    if(role.permissions.includes('product-category_create'))
         form(
             action =`${prefixAdmin}/products-category/create`
             method="POST"

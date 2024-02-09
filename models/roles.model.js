@@ -7,11 +7,21 @@ const roleSchema = new mongoose.Schema({
         default: []
     },
     description: String,
-    deletedAt: Date,
     position: Number,
     deleted:{
         type: Boolean,
         default: false
+    },
+    deletedBy: {
+        deletedAt: Date,
+        account_id:String
+    },
+    createdBy:{
+        createdAt: {
+            type: Date, 
+            default: Date.now
+        },
+        account_id:String
     }
 },{
     timestamps: true
