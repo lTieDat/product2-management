@@ -9,6 +9,8 @@ include ../../mixins/table-tree.pug
 include ../../mixins/moment.pug
 block main        
     if(role.permissions.includes('product-category_view'))
+        +alert-error(3000)
+        +alert-success(3000)
         h1 Danh mục sản phẩm
         .card.mb-3 
             .card-header Bộ lọc và tìm kiếm 

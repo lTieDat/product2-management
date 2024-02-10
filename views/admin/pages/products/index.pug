@@ -8,6 +8,7 @@ include ../../mixins/sort.pug
 include ../../mixins/moment.pug
 block main
     +alert-success(2000) 
+    +alert-error(2000)
     if(role.permissions.includes('product_view'))           
         h1 Quản lý sản phẩm
         .card.mb-3 
