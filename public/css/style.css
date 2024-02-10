@@ -1,3 +1,37 @@
+    /* sub- menu */
+    .sub-menu{
+        position: relative;
+        z-index: 999;
+    }
+.sub-menu ul{
+        position: absolute;
+        right: 0;
+        top:100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background: #eae9e9;
+        min-width: 100px;
+        display: none;
+    }
+
+.sub-menu ul li{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}   
+.sub-menu:hover > ul{
+    display: block;
+}
+.sub-menu ul li {
+    position: relative;
+}
+.sub-menu ul li ul{
+    right: 100%;
+    top: 0;
+}
+.sub-menu ul li:hover > ul{
+    display: block;
+}
 .header{
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
@@ -42,33 +76,41 @@
     }
 
 .product-item{
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-
-    }
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+}
 
 .product-item .inner-image{
         width: 100%;
         aspect-ratio: 4/3;
         border-bottom: 1px solid #ddd;
-    }
-
+        position: relative;
+}
 .product-item .inner-image img{
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
+}
+.product-item .inner-featured{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: green;
+    color: #fff;
+    padding: 3px 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+}
+    
 .product-item .inner-content{
         padding: 15px;
-    }
-
+}
 .product-item .inner-content .inner-title{
         font-size: 18px;
         font-weight: 600;
-        
-    }
+}
 
 .product-item .inner-content .inner-price-new{
         font-size: 18px;
@@ -95,37 +137,4 @@
         border-radius: 8px;
     }
 
-    /* sub- menu */
-.sub-menu{
-        position: relative;
-        z-index: 999;
-    }
-.sub-menu ul{
-        position: absolute;
-        right: 0;
-        top:100%;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        background: #eae9e9;
-        min-width: 100px;
-        display: none;
-    }
 
-.sub-menu ul li{
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }   
-.sub-menu:hover > ul{
-        display: block;
-    }
-.sub-menu ul li {
-        position: relative;
-}
-.sub-menu ul li ul{
-        right: 100%;
-        top: 0;
-}
-.sub-menu ul li:hover > ul{
-        display: block;
-}
