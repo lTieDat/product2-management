@@ -241,6 +241,7 @@ module.exports.createPost = async (req, res) => {
     newProduct.discountPercentage = req.body.discount;
     newProduct.deleted = false;
     await newProduct.save();
+    req.flash('success', 'Đã thêm sản phẩm mới');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
 
