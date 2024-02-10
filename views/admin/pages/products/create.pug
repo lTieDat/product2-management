@@ -30,6 +30,26 @@ block main
                         option(value="") ---Lựa chọn danh mục ---
                         if(records)
                             +select-tree(records,1,"")
+
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured1"
+                    name="featured"
+                    value="1"
+                )
+                label(for="featured1" class="form-check-label") Sản phẩm nổi bật
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured2"
+                    name="featured"
+                    value="2"
+                    checked
+                )
+                label(for="featured2" class="form-check-label") Sản phẩm hot
             div(class ="form-group")
                 label(for="description") Mô tả
                 textarea(

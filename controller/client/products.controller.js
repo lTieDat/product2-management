@@ -8,7 +8,6 @@ module.exports.products= async (req,res) =>{
         item.newPrice = (item.price - item.price * item.discountPercentage / 100).toFixed(0);
         item.discount = (item.price * item.discountPercentage / 100).toFixed(0);
     });
-    console.log(products);
     res.render('client/pages/products/products.pug',{
         title: "San pham",
         products: products
