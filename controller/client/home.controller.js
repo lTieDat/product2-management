@@ -16,8 +16,19 @@ module.exports.index = async (req,res) =>{
         status: "active"
     });
     const newProducts = productHelper.priceNew_products(featureProducts);
+    //end lay ra san pham noi bat
+
+    // lay ra san pham moi
+    const productNewest = await Product.find({
+        deleted: false,
+        status: "active"
+    }).sort({position: "desc"}).limit(8);
+    const newestProducts = productHelper.priceNew_products(productNewest);
+    //end lay ra san pham moi
+    console.log(newestProducts);
     res.render('client/pages/home/index.pug',{
         title: 'Trang chu',
-        featureProducts: newProducts
+        featureProducts: newProducts,
+        newestProducts: newestProducts
     });
 }

@@ -2,11 +2,20 @@ extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
 block main
-    .container.my-3 
-        .row 
-            .col-12 
-                +box-head('Sản phẩm nổi bật')
-            
-        +product-gri(featureProducts)
+    .section-product-featured.my-5
+        .container
+            .row 
+                .col-12 
+                    +box-head('Sản phẩm nổi bật')        
+            +product-gri(featureProducts)
+    
+    .section-product-featured.my-5
+        .container
+            .row 
+                .col-12 
+                    +box-head('Sản phẩm mới nhất')        
+            +product-gri(newestProducts) -//
+                
+                
                                     
 
