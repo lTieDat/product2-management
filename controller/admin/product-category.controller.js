@@ -159,7 +159,6 @@ module.exports.edit = async (req, res) => {
 };
 //PATCH /admin/products-category/edit/:id
 module.exports.editPath = async (req, res) => {
-    console.log(req.body);
     if (!req.body.position) {
         const countProduct = await ProductCategory.countDocuments();
         req.body.position = countProduct + 1;
@@ -174,10 +173,11 @@ module.exports.editPath = async (req, res) => {
             { _id: req.params.id }, req.body
         );
         req.flash('success', 'Đã cập nhật danh mục sản phẩm thành công');
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`);
     } catch (error) {
         req.flash('error', 'Cập nhật thất bại');
+        res.redirect("back")
     }
-    res.redirect(`back`);
 };
 
 //PATCH /admin/products-category/change_multi/
