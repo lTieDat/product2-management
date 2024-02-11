@@ -25,7 +25,6 @@ module.exports.index = async (req,res) =>{
     }).sort({position: "desc"}).limit(8);
     const newestProducts = productHelper.priceNew_products(productNewest);
     //end lay ra san pham moi
-    console.log(newestProducts);
     res.render('client/pages/home/index.pug',{
         title: 'Trang chu',
         featureProducts: newProducts,

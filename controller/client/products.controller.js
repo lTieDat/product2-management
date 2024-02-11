@@ -15,23 +15,33 @@ module.exports.products= async (req,res) =>{
     }); 
 };
 
-//[GET] /products/:slug
+//[GET] /products/:slugProduct
 module.exports.productDetail = async (req,res) =>{
     try{
-        if(req.params.slug==="undefined"){
-            req.flash('error', 'Không tìm thấy sản phẩm');
-            res.redirect(`/products`);
-            return;
-        }
         const find ={
-            slug : req.params.slug,
+            slug : req.params.slugProduct,
             deleted: false
         }
+        
         const product = await Product.findOne(find);
+        // gan danh muc san pham
+        if(product.category){
+            const category = await ProductCategory.findOne(
+                {   
+                    _id: product.category,
+                    status: "active",
+                    deleted: false
+                });
+            product.newCategory = category;
+        }
+        // tinh gia moi cho san pham
+        const newPriceEdit = productHelper.priceNew_product(product);
+        product.discount = newPriceEdit.discount;
+        product.newPrice = newPriceEdit.newPrice;
         res.render(`client/pages/products/detail`,{
                 pageTitle : "Chi tiết sản phẩm",
                 product : product
-        }); 
+        });
     }catch(e){
         req.flash('error', 'Không tìm thấy sản phẩm');
         res.redirect(`/products`);
@@ -43,7 +53,6 @@ module.exports.productCategory = async (req,res) =>{
     const category = await ProductCategory.findOne(
         {slug: req.params.slugCategory, deleted: false}
     );
-    
     
     const listSubCategory = await helperproductCategory.category(category._id);
     const listSubCategoryId = listSubCategory.map(sub => sub._id);

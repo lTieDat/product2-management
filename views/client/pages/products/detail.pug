@@ -1,27 +1,53 @@
 extends ../../layout/default.pug
-
+include ../../mixins/box-head.pug
 block main 
-    .container.my-3 
-        .row 
-            .col-12 
-                if(product.title)
-                    h1(class="mb-4") #{product.title}
+    .product-detail
+        .container.my-3 
+            .row 
+                .col-6 
+                    .inner-thumb 
+                        img(src= product.thumbnail , alt= product.title)
+                .col-6
+                    h1(class ="inner-title") #{product.title}
+
+                    if(product.newCategory)
+                        div(class="inner-category") 
+                            span Danh mục: 
+                            a(href=`/products/${product.newCategory.slug}`) #{product.newCategory.title}
+
+                    if(product.newPrice)
+                        span Giá hiên tại:
+                        div(class="inner-price-new") #{product.newPrice} $
+                    
                     if(product.price)
-                        div(class="mb-4") Giá: <b>#{product.price} $ </b>
-                    if(product.discountPercentage)
-                        p(class="mb-4") Giảm giá: <b>#{product.discountPercentage} % </b>
+                        span Giá cũ:
+                        div(class="inner-price-old") #{product.price} $
+                    
+                    if(product.discount)
+                        div(class="inner-percent") Giảm giá: #{product.discount} %
                     if(product.stock)
-                        div(class="mb-4") Số lượng: <b>#{product.stock} </b>
-                    if(product.thumbnail)
-                    div(class="mb-4")
-                        img(src= product.thumbnail , class="img-fluid")
-                    if(product.status)
-                        span Trạng thái: 
-                        if(product.status === "active")
-                            span(class="badge bg-success") Đang bán 
-                        else
-                            span(class="badge bg-error") Ngừng bán
-                    if(product.description) 
-                        div(class="mb-4") Mô tả: <b>#{product.description} </b>
-                
-                
+                        div(class="inner-stock") Còn #{product.stock} sản phẩm
+
+                        form(
+                            action = `/cart/add/${product._id}`
+                            method = "POST"
+                        )            
+                            input(
+                                class= "form-control"
+                                type= "number"
+                                value ="1"
+                                min="1"
+                                max= product.stock
+                                name= "quantity"
+                            )
+                            button(
+                                class= "btn btn-success btn-block mt-3"
+                                type= "submit"
+                            ) Thêm vào giỏ hàng
+        hr
+        
+        .container.my-5 
+            .row 
+                .col-12 
+                    +box-head("Mô tả chi tiết")
+                    .inner-desc !{product.description}
