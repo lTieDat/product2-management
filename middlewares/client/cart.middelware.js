@@ -14,8 +14,11 @@ module.exports.cardId = async (req, res, next) => {
             await cart.save();
             res.cookie('cardId',cart.id, {expires: new Date(Date.now() + 900000)});
         }
-        
-    }
-    
+        const cart = await Cart.findById({
+            _id: req.cookies.cardId
+        });
+        cart.totalQuantity = cart.products.reduce((total, product) => total + parseInt(product.quantity), 0);
+        res.locals.miniCart = cart;
+    }    
     next();
 }

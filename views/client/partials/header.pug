@@ -22,4 +22,9 @@ header.header
                             - const pathProduct ='/products';
                             a(href="/products") Sản phẩm
                                 +sub-menu(productCategory,pathProduct)
+                        li
+                            if(miniCart.totalQuantity)
+                                a(href="#") Giỏ hàng (#{miniCart.totalQuantity})    
+                            else
+                                a(href="#") Giỏ hàng (0)
                                 
