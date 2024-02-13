@@ -1,0 +1,50 @@
+extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+    //- +alert-success(2000)
+    //- +alert-error(2000)
+    .container.my-3 
+        .row    
+            .col-12 
+                +box-head("Giỏ hàng")
+        
+
+        .row 
+            .col-12 
+                if(cart.products.length > 0)
+                    table.table.table-bordered.table-hover
+                        thead
+                            tr
+                                th STT
+                                th Ảnh
+                                th Sản phẩm
+                                th Số lượng
+                                th Giá
+                                th Tổng cộng
+                                th Hành động
+                        tbody
+                            each item,index in cart.products
+                                tr
+                                    td #{index+1}
+                                    td 
+                                        img(src=item.productInfo.thumbnail, alt=item.productInfo.title style ="width: 100px ; height: 100px")
+                                    td 
+                                        a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
+                                    td 
+                                        input(type="number", min="1", value=item.quantity, style="width: 50px" name="quantity"
+                                              product-id=item.product_id)
+                                    td #{item.productInfo.newPrice} $
+                                    td  #{item.productInfo.newPrice * item.quantity} $
+                                    td 
+                                        a(
+                                            class="btn btn-danger"
+                                            href =`/cart/delete/${item.product_id}` 
+                                            ) Xóa
+                    h4 Tổng tiền : #{cart.totalPrice} $
+                    a(class="btn btn-success" href="/cart/checkout") Thanh toán
+                else 
+                    h3 Giỏ hàng trống
+                    a(class="btn btn-success" href="/products") Tiếp tục mua hàng
+    script(src="/js/cart.js") 

@@ -12,7 +12,7 @@ module.exports.cardId = async (req, res, next) => {
         if(!checkID){
             const cart = new Cart();
             await cart.save();
-            res.cookie('cardId',cart.id, {expires: new Date(Date.now() + 900000)});
+            res.cookie('cardId',cart.id, {expires: new Date(Date.now() + 9000000)});
         }
         const cart = await Cart.findById({
             _id: req.cookies.cardId
