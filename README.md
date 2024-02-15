@@ -1,3 +1,3 @@
 # product2-management
  
-[<img alt="Home page" width="40px" />](https://res.cloudinary.com/dodip3vc2/image/upload/v1708005882/Screenshot_2024-02-15_210206_torlk1.png)
+[<img alt="Home page">](https://res.cloudinary.com/dodip3vc2/image/upload/v1708005882/Screenshot_2024-02-15_210206_torlk1.png)
