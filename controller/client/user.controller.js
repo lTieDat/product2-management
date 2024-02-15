@@ -2,6 +2,8 @@ const User = require('../../models/user.model');
 const md5 = require('md5');
 const forgotPassword = require('../../models/forgotPassword');
 const generate = require('../../helpers/generate');
+const sendMailHelper = require('../../helpers/sendmail');
+
 
 //[GET] /user/register
 module.exports.register = async(req,res) =>{
@@ -99,5 +101,61 @@ module.exports.forgotPasswordPost = async(req,res) =>{
     const forgotPasswordmodel = new forgotPassword(objectForgotPassword);
     await forgotPasswordmodel.save();
     // tồn tại email thì gửi OTP qua email
-    res.redirect("/user/password/otp");
+    const subject = "Mã OTP đổi mật khẩu";
+    const html =
+                `Mã OTP của bạn là: <b>${newOTP} </b>,
+                thời hạn 3 phút</b>`;
+    sendMailHelper.sendMail(email,subject,html);
+    res.redirect(`/user/password/otp?email=${email}`);
+}
+
+//[GET] /user/password/otp
+module.exports.otp = async(req,res) =>{
+    const email = req.query.email;
+    res.render('client/pages/user/otp-password',{
+        pageTitle: "Nhập OTP",
+        email: email
+    });
+} 
+
+//[POST] /user/password/otp
+module.exports.otpPost = async(req,res) =>{
+    const email = req.body.email;
+    const otp = req.body.otp;
+    const query = await forgotPassword.findOne({
+        email: email,
+        otp: otp,
+    });
+    if(!query){
+        req.flash("error", "Mã OTP không đúng");
+        res.redirect("back");
+        return;
+    }
+    const user = await User.findOne({
+        email: email,
+    }).select("tokenUser");
+    res.cookie("tokenUser",user.tokenUser);
+    res.redirect(`/user/password/reset?email=${email}`);
+}
+
+//[GET] /user/password/reset
+module.exports.resetPassword = async(req,res) =>{
+    // const email = req.query.email;
+    res.render('client/pages/user/reset-password',{
+        pageTitle: "Đổi mật khẩu",
+    });
+}
+
+//[POST] /user/password/reset
+module.exports.resetPasswordPost = async(req,res) =>{
+    const password = req.body.password;
+    const userToken = req.cookies.tokenUser;
+    await User.updateOne({
+        tokenUser: userToken,
+    },{
+        password : md5(password) 
+    }
+    );
+    req.flash("success", "Đổi mật khẩu thành công");
+    res.redirect("/");
 }
