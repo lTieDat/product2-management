@@ -22,12 +22,8 @@ header.header
                             - const pathProduct ='/products';
                             a(href="/products") Sản phẩm
                                 +sub-menu(productCategory,pathProduct)
-                        if(!miniCart.totalQuantity.length)
-                               li    
-                                    a(href="/cart") Giỏ hàng (0)    
-                        else
-                               li
-                                    a(href="/cart") Giỏ hàng (#{miniCart.totalQuantity})  
+                        li 
+                            a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})
                         if(user)
                             li
                                 a(href="/user/logout") Đăng xuất 
