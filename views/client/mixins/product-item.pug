@@ -3,8 +3,8 @@ mixin product-item(item)
             .inner-image 
                 img(src=item.thumbnail, 
                 alt=item.title)  
-                        if(item.featured == "1") 
-                            .inner-featured Nổi Bật  
+                if(item.featured == "1") 
+                    .inner-featured Nổi Bật  
             .inner-content
                 h3.inner-title 
                     a(href=`/products/detail/${item.slug}`) #{item.title}
