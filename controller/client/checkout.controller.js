@@ -51,7 +51,7 @@ module.exports.order = async (req, res) => {
             _id: item.product_id
         }).select("price discountPercentage");
         objectProduct.price = productInfo.price;
-        objectProduct.discount = productInfo.discountPercentage;
+        objectProduct.discountPercentage = productInfo.discountPercentage;
         products.push(objectProduct);
     }
     const newOrder = {
@@ -73,8 +73,25 @@ module.exports.order = async (req, res) => {
 
 // [GET] /checkout/success/:id
 module.exports.success = async (req, res) => {
+    const order = await Order.findOne({
+        _id: req.params.orderId
+    });
+    for(const item of order.products){
+        const productInfo = await Product.findOne({
+            _id: item.product_id
+        }).select("title thumbnail slug");
+        item.productInfo = productInfo;
+        const newInfo = priceHelper.priceNew_product(item);
+        item.priceNew = newInfo.newPrice;
+        item.discount = newInfo.discount;
+        item.totalPrice = item.priceNew * item.quantity;
+    }
+
+    order.totalPrice = order.products.reduce((total, item) => {
+        return total + item.totalPrice;
+    }, 0);
     res.render("client/pages/checkout/success.pug", {
         pageTitle: "Đặt hàng thành công",
-        orderId: req.params.id
+        order: order
     })
 }

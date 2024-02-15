@@ -23,7 +23,7 @@ header.header
                             a(href="/products") Sản phẩm
                                 +sub-menu(productCategory,pathProduct)
                         li
-                            if(miniCart.totalQuantity > 0)
+                            if(miniCart.totalQuantity.length > 0)
                                 a(href="/cart") Giỏ hàng (#{miniCart.totalQuantity})    
                             else
                                 a(href="/cart") Giỏ hàng (0)

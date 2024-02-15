@@ -7,3 +7,52 @@ block main
         .row
             .col-12
                 +box-head("đặt hàng thành công")
+        .row 
+            .col-12 
+                div(class="alert alert-success") 
+                    | Đặt hàng thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. Cảm ơn bạn đã tin tưởng và mua hàng tại cửa hàng chúng tôi.
+        if(order)
+            .row    
+                .col-12 
+                    h4(class="mb-2") Thông tin cá nhân 
+                    table(class="table table-bordered") 
+                        tbody
+                            tr 
+                                th Họ và tên 
+                                td  
+                                    b #{order.UserInfo.fullName}
+                            tr 
+                                th Điện thoại 
+                                td 
+                                    b #{order.UserInfo.phone}
+                            tr 
+                                th Địa chỉ 
+                                td 
+                                    b #{order.UserInfo.address}
+            .row    
+                .col-12 
+                    h4(class="mb-2") Thông tin đơn hàng     
+                    table(class="table table-bordered")
+                        thead 
+                            tr 
+                                th STT 
+                                th Anh
+                                th Tên sản phẩm 
+                                th Đơn giá 
+                                th Số lượng  
+                                th Thành tiền
+                        tbody
+                            if(order.products.length >0)
+                                each product, index in order.products
+                                    div #{product}
+                                    tr 
+                                        td #{index + 1}
+                                        td 
+                                            img(src=product.productInfo.thumbnail, alt=product.productInfo.title, width="50")
+                                        td 
+                                            a(href=`/products/detail/${product.productInfo.slug}`) #{product.productInfo.title}
+                                        td #{product.priceNew} $
+                                        td #{product.quantity} 
+                                        td #{(product.priceNew * product.quantity)} $
+            h4(class="mt-3") Tổng tiền: #{order.totalPrice} $
+                            
