@@ -32,3 +32,13 @@ module.exports.loginPost =(req,res,next) =>{
     }
     next();
 } 
+
+//validate forgot password
+module.exports.forgotPasswordPost =(req,res,next) =>{
+    if(!req.body.email){
+        req.flash('info','Vui lòng nhập email');
+        res.redirect("back");
+        return;
+    }
+    next();
+}

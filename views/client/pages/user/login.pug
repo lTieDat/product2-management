@@ -3,7 +3,7 @@ include ../../mixins/alert.pug
 block main 
     .container.my-5 
         .col-8 
-            h1(class="text-center") Đăng ký tài khoản
+            h1(class="text-center") Đăng nhap tài khoản
             form(method ="POST" action ="/user/login")
                 div(class="form-group")
                     label(for="email") Email
@@ -14,3 +14,6 @@ block main
                 div(class="form-group")
                     br
                     button(type="submit" class="btn btn-primary") Đăng nhập
+            a(href="/user/register") Đăng ký tài khoản mới
+            br
+            a(href="/user/password/forgot") Quên mật khẩu
