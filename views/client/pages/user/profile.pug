@@ -1,0 +1,9 @@
+extends ../../layout/default.pug
+include ../../mixins/sub-menu.pug
+include ../../mixins/box-head.pug
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head('Thông tin cá nhân')
+                div #{user}

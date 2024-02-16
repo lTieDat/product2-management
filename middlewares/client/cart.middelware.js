@@ -17,8 +17,10 @@ module.exports.cardId = async (req, res, next) => {
         const cart = await Cart.findById({
             _id: req.cookies.cardId
         });
-        cart.totalQuantity = cart.products.reduce((total, product) => total + parseInt(product.quantity), 0);
-        res.locals.miniCart = cart;
+        if(cart){
+            cart.totalQuantity = cart.products.reduce((total, product) => total + parseInt(product.quantity), 0);
+            res.locals.miniCart = cart;
+        }
     }    
     next();
 }

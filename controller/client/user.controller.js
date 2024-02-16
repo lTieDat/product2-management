@@ -3,7 +3,7 @@ const md5 = require('md5');
 const forgotPassword = require('../../models/forgotPassword');
 const generate = require('../../helpers/generate');
 const sendMailHelper = require('../../helpers/sendmail');
-
+const Cart = require('../../models/cart.models');
 
 //[GET] /user/register
 module.exports.register = async(req,res) =>{
@@ -62,12 +62,25 @@ module.exports.loginPost = async(req,res) =>{
         res.redirect("back");
         return;
     }
+    const cart = await Cart.findOne({
+        userId: user.id
+    });
+    if(cart){
+        res.cookie("cardId",cart.id);
+    }else{
+        await Cart.updateOne({
+                _id: req.cookies.cardId
+            },{
+                user_id: user.id
+            });
+    }     
     res.cookie("tokenUser",user.tokenUser);
     res.redirect("/");
 }
 
 //[GET] /user/logout
 module.exports.logout = async(req,res) =>{
+    res.clearCookie("cardId");
     res.clearCookie("tokenUser");
     res.redirect("/");
 }
@@ -159,3 +172,15 @@ module.exports.resetPasswordPost = async(req,res) =>{
     req.flash("success", "Đổi mật khẩu thành công");
     res.redirect("/");
 }
+
+//[GET] /user/profile
+module.exports.profile = async(req,res) =>{
+    const user = await User.findOne({
+        tokenUser: req.cookies.tokenUser
+    }).select("- password - tokenUser");  
+    res.render("client/pages/user/profile",
+    {
+        pageTitle: "Thông tin cá nhân",
+        user: user
+    })
+};
