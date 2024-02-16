@@ -7,8 +7,12 @@ const cartMiddleware = require('../../middlewares/client/cart.middelware.js');
 const checkoutRouter = require('./checkout.route.js');
 const userRouter = require('./user.route.js');
 const userInfoMiddleware = require('../../middlewares/client/user.middleware.js');
+const settingMiddleware = require('../../middlewares/client/setting.middleware.js');
+
+
 
 const router = (app) =>{
+    app.use(settingMiddleware.settingGeneral);
     app.use(userInfoMiddleware.infoUser);
     app.use(categoryMiddleware.category);
     app.use(cartMiddleware.cardId);

@@ -56,20 +56,20 @@ block main
                     placeholder="Nhập số điện thoại"
                     required
                 )
-            div(class="form-group" upload-image)
+            div(class ="form-group" upload-image)
                 label(for="avatar") Hình ảnh
                 input(
                     type="file"
-                    class="form-control"
-                    id="image"
-                    name="image"
+                    class="form-control-file"
+                    id="avatar"
+                    name="avatar"
                     accept="image/*"
+                    upload-image-input
                 )
                 img(
                     src=""
-                    class="img-preview"
                     upload-image-preview
-                    style="max-height: 200px"
+                    class="image-preview"
                 )
             div(class="form-group")
                 label(for="role") Nhóm quyền

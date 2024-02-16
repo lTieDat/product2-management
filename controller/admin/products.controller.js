@@ -235,8 +235,7 @@ module.exports.createPost = async (req, res) => {
     req.body.createdBy = {
         account_id: res.locals.user.id
     };
-    // if(req.file)
-    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+
     const newProduct = new Product(req.body);
     newProduct.discountPercentage = req.body.discount;
     newProduct.deleted = false;
@@ -303,8 +302,6 @@ module.exports.editPath = async (req, res) => {
     else {
         req.body.discount = parseInt(req.body.discount);
     }
-    if (req.file)
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
     try {
         const updatedBy = {
             account_id: res.locals.user.id,

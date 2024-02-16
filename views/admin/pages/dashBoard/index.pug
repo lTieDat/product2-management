@@ -1,6 +1,22 @@
 extends ../../layout/default.pug
 
 block main
-    h1 trang tong quan
-    div #{user}
-    div #{role}
+    h1 Trang tổng quan 
+
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header Thông tin tài khoản
+                .card-body 
+                    if(user.avatar)
+                        img(src=user.avatar, alt=user.name,
+                            style="height: 100px; margin-bottom: 20px; border-radius: 50%;")
+                    if(user.fullName)
+                        p Họ và Tên: <b> #{user.fullName} </b>
+                    if(user.email)
+                        p Email: <b> #{user.email} </b>
+                    if(user.phone)
+                        p Số điện thoại: <b> #{user.phone} </b>
+                    if(user.role)
+                        p Vai trò: <b> #{user.role} </b>
+                    

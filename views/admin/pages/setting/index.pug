@@ -1,0 +1,85 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+block main 
+    h1 Cài đặt chung 
+    +alert-success(3000)
+    +alert-error(3000)
+    form(
+        action=`${prefixAdmin}/setting/general?_method=PATCH`
+        method='POST'
+        enctype ="multipart/form-data"
+    )
+        div(class= "form-group")
+            label(for='siteName') Tên website
+            input(
+                type='text'
+                class='form-control'
+                id='websiteName'
+                name='websiteName'
+                value= (record ? record.websiteName : '')
+            )
+        div(class= "form-group" upload-image)
+            label(for='logo') Logo
+            input(
+                type='file'
+                class='form-control-file'
+                id='logo'
+                name='logo'
+                accept = 'image/*'
+                upload-image-input 
+            )
+            img(
+                src=(record? record.logo : "")
+                classs ="image-preview"
+                upload-image-preview
+            )
+        div(class= "form-group")
+            label(for="email") Email    
+            input(
+                type='email'
+                class='form-control'
+                id='email'
+                name='email'
+                value= (record ? record.email : '')
+            )
+        div(class= "form-group")
+            label(for="phone") Số điện thoại
+            input(
+                type='text'
+                class='form-control'
+                id='phone'
+                name='phone'
+                value= (record ? record.phone : '')
+            )
+        div(class= "form-group")
+            label(for="address") Địa chỉ
+            input(
+                type='text'
+                class='form-control'
+                id='address'
+                name='address'
+                value= (record ? record.address : '')
+            )
+        div(class= "form-group")
+            label(for="facebook") facebook
+            input(
+                type='text'
+                class='form-control'
+                id='facebook'
+                name='facebook'
+                value= (record ? record.facebook : '')
+            )
+        div(class= "form-group")
+            lable(for="copyRight") Bản quyền
+            input(
+                type='text'
+                class='form-control'
+                id='copyRight'
+                name='copyRight'
+                value= (record ? record.copyRight : '')
+            )
+        div(class= "form-group")
+            button(
+            type='submit'
+            class='btn btn-primary'
+            ) Lưu

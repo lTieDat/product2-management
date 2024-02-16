@@ -25,7 +25,7 @@ module.exports.create = async(req, res) => {
     const records = await Role.find(
        { deleted : false}
     );
-
+    
     res.render('admin/pages/accounts/create',{
         pageTitle: "Thêm tài khoản người dùng",
         records: records
@@ -37,11 +37,14 @@ module.exports.postCreate = async (req, res) => {
     const emailExist = await Account.findOne({
         email: req.body.email,
         deleted: false
-    });
+    }).select("email");
     if(emailExist){
         req.flash('error', `Email ${emailExist} đã tồn tại`);
         res.redirect("back");
     }else{
+        req.body.createdBy = {
+            account_id: res.locals.user.id
+        };
         req.body.password = md5(req.body.password);
         const record = new Account(req.body);
         await record.save();

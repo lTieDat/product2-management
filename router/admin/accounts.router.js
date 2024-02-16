@@ -1,11 +1,10 @@
 const express = require('express');
 const multer = require('multer');
-const router = express.Router();
 const upload = multer();
 const controller = require('../../controller/admin/accounts.controller.js')
 const uploadCloud = require('../../middlewares/admin/uploadCloud.middlewares.js');
 const validate = require('../../validate/admin/account.validate.js');
-
+const router = express.Router();
 router.get('/', controller.index);
 router.get('/create', controller.create);
 router.post('/create', 
