@@ -19,4 +19,32 @@ block main
                         p Số điện thoại: <b> #{user.phone} </b>
                     if(user.role)
                         p Vai trò: <b> #{user.role} </b>
-                    
+        .col-6
+            .card.mb-4
+                .card-header Danh mục sản phẩm
+                .card-body
+                    p Số lượng sản phẩm: <b> #{statistic.categoryProduct.total} </b>
+                    p Hoạt động: <b>#{statistic.categoryProduct.active} </b>
+                    p Dừng kinh doanh: <b> #{statistic.categoryProduct.deactive} </b>
+        .col-6
+            .card.mb-4
+                .card-header Sản phẩm
+                .card-body
+                    p Số lượng sản phẩm: <b> #{statistic.product.total}</b>
+                    p Số lượng sản phẩm hoạt động: <b> #{statistic.product.active}</b>
+                    p Số lượng sản phẩm dừng kinh doanh: <b> #{statistic.product.deactive}</b>
+        
+        .col-6
+            .card.mb-4
+                .card-header Tài khoản quản trị
+                .card-body
+                    p Số lượng : <b> #{statistic.account.total}</b>
+                    p Hoạt động: <b> #{statistic.account.active} </b>
+                    p Dừng hoạt động: <b> #{statistic.account.deactive} </b>
+        .col-6
+            .card.mb-4
+                .card-header Tài khoản người dùng
+                .card-body 
+                    p Số lượng : <b>#{statistic.user.total} </b>
+                    p Hoạt động: <b> #{statistic.user.active}</b>
+                    p Dừng hoạt động: <b>#{statistic.user.deactive} </b>
