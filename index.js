@@ -57,6 +57,11 @@ router(app);
 //nhúng admin index.router.js vào project (để cuối sau các thư viện)
 const adminRouter = require('./router/admin/index.router.js');
 adminRouter(app);
+app.get("*",(req,res) =>{
+    res.render("client/pages/error/404.pug",{
+        title: "404 Not Found"
+    });
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
