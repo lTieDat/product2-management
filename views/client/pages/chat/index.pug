@@ -1,0 +1,30 @@
+extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+
+block main
+    .container.my-3 
+        .row    
+            .col-12 
+                +box-head("chat")
+        
+        .row 
+            .col-12 
+                .chat 
+                    .inner-body 
+                        .inner-incoming 
+                            .inner-name user1
+                            .inner-content alo
+                        .inner-outgoing
+                            .inner-content oke
+                        .inner-incoming
+                            .inner-name user1
+                            .inner-content oke2 
+                        .inner-outgoing
+                            .inner-content alo2
+                    .inner-foot 
+                        form(class = "inner-form" action ="")
+                            input(type = "text" name="content" placeholder = "Type a message")
+                            button  
+                                i.fa.fa-paper-plane(aria-hidden='true')
+
+                        

@@ -29,9 +29,18 @@ const port = process.env.PORT ;
 const path=require('path');
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-//gan database
+//socket io
+const http = require('http');
+const { Server } = require("socket.io");
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io;
+// end socket io
+
+//setup database
 const database = require('./config/database.js');
 database.connect();
+//end setup database
 
 //app local variable
 const systemConfig = require('./config/system.js');
@@ -40,7 +49,7 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // nhung folder public / __dirname 
 // local:
 // app.use(express.static('public'));
-//deploy
+// deploy:
 app.use(express.static(`${__dirname}/public`));  
 
 //gán view 
@@ -63,10 +72,9 @@ app.get("*",(req,res) =>{
     });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
 
 
 
