@@ -19,8 +19,10 @@ html
         //- socket.io
         script(src="/socket.io/socket.io.js")
         script(src="/js/socket.js")
-        script(src="/js/chat.js")
+        script(type= "module" src="/js/chat.js")
         //- end socket.io
+        script(type= "module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js") 
+        //- emoji-picker-element
 
         script(src="/js/script.js") 
         

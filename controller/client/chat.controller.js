@@ -5,7 +5,7 @@ module.exports.index = async(req, res) => {
     const userId = res.locals.user.id;
     const fullName = res.locals.user.fullName;
     _io.once('connection', (socket) => {
-        socket.once("CLIENT_SEND_MESSAGE", async (content)=>{
+        socket.on("CLIENT_SEND_MESSAGE", async (content)=>{
             const chat = new Chat({
                 user_id: userId,
                 content: content

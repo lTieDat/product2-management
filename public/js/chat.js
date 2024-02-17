@@ -1,3 +1,5 @@
+import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+
 // client send message
 const formSendData = document.querySelector(".chat .inner-form");
 if(formSendData){
@@ -41,3 +43,25 @@ if(bodyChat){
     bodyChat.scrollTop = bodyChat.scrollHeight;
 }
 // end fix scroll chat to the last message
+
+//show icon chat
+// showpopup
+  const buttonIcon = document.querySelector('.button-icon');
+  if(buttonIcon){
+    const tooltip = document.querySelector('.tooltip');
+    Popper.createPopper(buttonIcon, tooltip);
+    buttonIcon.onclick = () => {
+        tooltip.classList.toggle('shown')
+    };
+  }
+// end showpopup
+// insert icon into input
+const emojipicker = document.querySelector('emoji-picker');
+if(emojipicker){
+    const input = document.querySelector('.chat .inner-form input[name="content"]');
+    emojipicker.addEventListener('emoji-click', (event) => {
+        input.value += event.detail.unicode;
+    });
+}
+// end insert icon into input
+// end show icon chat

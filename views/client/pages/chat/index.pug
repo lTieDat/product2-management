@@ -20,7 +20,9 @@ block main
                     .inner-foot 
                         form(class = "inner-form" action ="")
                             input(type = "text" name="content" placeholder = "Type a message")
+                            span(class="button-icon btn btn-light mx-2")
+                                i.fa.fa-smile-o
                             button  
                                 i.fa.fa-paper-plane(aria-hidden='true')
-
-                        
+    div(class="tooltip" role="tooltip")
+        emoji-picker                     
