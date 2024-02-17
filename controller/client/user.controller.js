@@ -177,7 +177,7 @@ module.exports.resetPasswordPost = async(req,res) =>{
 module.exports.profile = async(req,res) =>{
     const user = await User.findOne({
         tokenUser: req.cookies.tokenUser
-    }).select("- password - tokenUser");  
+    }).select("-password -tokenUser");  
     res.render("client/pages/user/profile",
     {
         pageTitle: "Thông tin cá nhân",

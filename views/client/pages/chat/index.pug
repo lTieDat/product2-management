@@ -11,16 +11,12 @@ block main
             .col-12 
                 .chat 
                     .inner-body 
-                        .inner-incoming 
-                            .inner-name user1
-                            .inner-content alo
-                        .inner-outgoing
-                            .inner-content oke
-                        .inner-incoming
-                            .inner-name user1
-                            .inner-content oke2 
-                        .inner-outgoing
-                            .inner-content alo2
+                        each item of chat
+                            div(class=(item.user_id == user.id) ? "inner-outgoing" : "inner-incoming") 
+                                if(item.user_id != user.id)
+                                    p.inner-name #{item.infoUser[0].fullName}      
+                                p.inner-content #{item.content}
+                                
                     .inner-foot 
                         form(class = "inner-form" action ="")
                             input(type = "text" name="content" placeholder = "Type a message")
