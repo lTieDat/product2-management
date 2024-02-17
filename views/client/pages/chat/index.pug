@@ -9,7 +9,7 @@ block main
         
         .row 
             .col-12 
-                .chat 
+                .chat(my-id= user.id)
                     .inner-body 
                         each item of chat
                             div(class=(item.user_id == user.id) ? "inner-outgoing" : "inner-incoming") 
