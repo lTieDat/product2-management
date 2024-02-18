@@ -14,21 +14,27 @@ block main
                         each item of chat
                             div(class=(item.user_id == user.id) ? "inner-outgoing" : "inner-incoming") 
                                 if(item.user_id != user.id)
-                                    p.inner-name #{item.infoUser[0].fullName}      
-                                p.inner-content #{item.content}
+                                    .inner-name #{item.infoUser[0].fullName} 
+                                if(item.content)     
+                                    .inner-content #{item.content}
+                                if(item.images)
+                                    .inner-images
+                                        each image in item.images
+                                            img(src=image alt="image")
                         div(class="inner-list-typing")
                             div(class="box-typing")
                                 div(class="typing")
-                                    //- div(class="inner-name") LTD                         
-                                    //- div(class="inner-dots")
-                                    //-     span    
-                                    //-     span 
-                                    //-     span
+                    .inner-preview-images
+                        div(class="custom-file-container" data-upload-id="upload-img")
                     .inner-foot 
                         form(class = "inner-form" action ="")
                             input(type = "text" name="content" placeholder = "Type a message")
+                            
                             span(class="button-icon btn btn-light mx-2")
                                 i.fa.fa-smile-o
+                            label(class="button-icon btn btn-light mx-2 mb-0" 
+                                for ="file-upload-with-preview-upload-img")
+                                i.fa.fa-file-image-o
                             button  
                                 i.fa.fa-paper-plane(aria-hidden='true')
     div(class="tooltip" role="tooltip")

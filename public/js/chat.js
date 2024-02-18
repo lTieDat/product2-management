@@ -1,4 +1,8 @@
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
+// file upload with preview
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-img',{
+  multiple: true,maxFileCount: 6
+});
 
 // client send message
 const formSendData = document.querySelector(".chat .inner-form");
@@ -6,9 +10,14 @@ if (formSendData) {
   formSendData.addEventListener("submit", (e) => {
     e.preventDefault();
     const content = e.target.elements.content.value;
-    if (content) {
-      socket.emit("CLIENT_SEND_MESSAGE", content);
+    const images = upload.cachedFileArray;
+    if (content || images.length > 0) {
+      socket.emit("CLIENT_SEND_MESSAGE", {
+        content : content,
+        images : images
+      });
       e.target.elements.content.value = "";
+      upload.resetPreviewPanel(); // clear all preview img
       socket.emit("CLIENT_TYPING", "hide");
     }
   });
@@ -22,18 +31,37 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   const div = document.createElement("div");
   const boxTyping = document.querySelector(".chat .inner-list-typing");
   let htmlFullName = "";
+  let htmlContent ="";
+  let htmlImages = "";
   if (myId == data.userId) {
     div.classList.add("inner-outgoing");
   } else {
     htmlFullName = `<div class="inner-name my-name">${data.fullName}</div>`;
     div.classList.add("inner-incoming");
   }
+  if(data.content){
+    htmlContent = `
+          ${htmlFullName}
+          <div class="inner-content">
+              ${data.content}
+          </div>
+      `;
+  }
+  if(data.images.length > 0){
+    htmlImages += `<div class="inner-images">`;
+    for (const item of data.images) {
+      htmlImages +=  `<img src="${item}">`
+    }
+         
+    htmlImages+=`</div>`;
+      
+  }
   div.innerHTML = `
-        ${htmlFullName}
-        <div class="inner-content">
-            ${data.content}
-        </div>
-    `;
+          ${htmlFullName}
+          ${htmlContent}
+          ${htmlImages}
+  `;
+
   // body.appendChild(div);
   body.insertBefore(div, boxTyping);
   body.scrollTop = body.scrollHeight;
