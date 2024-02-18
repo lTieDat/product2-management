@@ -7,6 +7,9 @@ html
         link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/style.css")
         link(rel="stylesheet", href="/css/style.css")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+        //- viewerjs
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.css")
+        //- end viewerjs
     body 
         include ../partials/header.pug
         +alert-success(2000)
@@ -30,7 +33,10 @@ html
 
         //- file upload with preview
         script(src="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.iife.js")
-
         //- end file upload with preview
+        
+        //- viewerjs
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.js") 
+        //- end viewerjs
         script(src="/js/script.js") 
         

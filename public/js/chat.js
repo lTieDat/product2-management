@@ -61,10 +61,13 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
           ${htmlContent}
           ${htmlImages}
   `;
-
   // body.appendChild(div);
   body.insertBefore(div, boxTyping);
   body.scrollTop = body.scrollHeight;
+  
+  // preview full image
+  const gallery = new Viewer(div);
+  // end preview full image
 });
 // end server return message
 
@@ -161,3 +164,11 @@ if (elementListTyping) {
   });
 }
 // end server typing
+
+
+//preview full image
+const bodyInnerPreviewImg = document.querySelector(".chat .inner-body");
+if (bodyInnerPreviewImg) {
+    const gallery = new Viewer(bodyInnerPreviewImg);
+}
+// end preview full image

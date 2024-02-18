@@ -3,7 +3,6 @@ const User = require('../../models/user.model');
 const uploadToCloudinary = require('../../helpers/uploadToCloudinary');
 const socket = require('../../sockets/client/chat.socket');
 
-
 // [GET] /chat
 module.exports.index = async(req, res) => {
     // socket IO
@@ -22,8 +21,6 @@ module.exports.index = async(req, res) => {
         item.infoUser = user;
     }
     // end get all chat
-
-    
     res.render('client/pages/chat/index', {
         title: 'Chat',
         chat: chat
