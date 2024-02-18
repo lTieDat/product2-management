@@ -19,6 +19,14 @@ module.exports.index = async(req, res) => {
             });
             //end show data in client
         });
+        // typing
+        socket.on("CLIENT_TYPING", async (data)=>{
+            socket.broadcast.emit("SERVER_TYPING", {
+                userId: userId,
+                fullName: fullName,
+                type: data
+            });
+        });
     });
     // get all chat
     const chat = await Chat.find({

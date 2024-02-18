@@ -16,7 +16,14 @@ block main
                                 if(item.user_id != user.id)
                                     p.inner-name #{item.infoUser[0].fullName}      
                                 p.inner-content #{item.content}
-                                
+                        div(class="inner-list-typing")
+                            div(class="box-typing")
+                                div(class="typing")
+                                    //- div(class="inner-name") LTD                         
+                                    //- div(class="inner-dots")
+                                    //-     span    
+                                    //-     span 
+                                    //-     span
                     .inner-foot 
                         form(class = "inner-form" action ="")
                             input(type = "text" name="content" placeholder = "Type a message")
