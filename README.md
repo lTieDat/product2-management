@@ -10,23 +10,31 @@
 2.1. For manager
 - 
 + Router: /admin/auth/login (localhost) or https://product-management-ltd.vercel.app/admin/auth/login (vercel)
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708268654/Screenshot_2024-02-18_220323_gs5umc.png)
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274141/loginad_vaia9v.png)
         Login page for admin
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708268877/dash_fbb9dg.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708273903/dash_tr6ium.png)
         Dashboard page for admin
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708268972/cate_fyquhe.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274035/product_status_1_e4uxrt.png)
         Product category management
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269188/Screenshot_2024-02-18_221232_klbtsj.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274034/product_2_jvv4va.png)
         Product management
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269550/acc_kyh7sl.png)
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269550/autho_vmld0o.png)
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269551/setting_a9qklc.png)
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274382/sort_qivdpn.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274244/acc_zjlpzo.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274244/setting_qsh9qk.png)
         Setting for website
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269552/sortByStatus_bztzoc.png)
-       sort product that active
-    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708269552/sortBystatus2_fvezyc.png)
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274382/sortpro1_ij5mab.png)
+        sort product that active
+
+    ![](https://res.cloudinary.com/dodip3vc2/image/upload/v1708274382/sortpro2_skucjm.png)
         sort product inactive
-    + search, sort, change status function works nomarly like Product management page
+    
+    **+ search, sort, change status function works nomarly like Product management page**
 
 2.2. For user
         ![HOME PAGE](https://res.cloudinary.com/dodip3vc2/image/upload/v1708273365/homepage_agxswh.png)
