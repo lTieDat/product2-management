@@ -1,7 +1,7 @@
 # E-commerce website
 **1. Features**
 - 
-+ Skill : NERM STACK (NodeJS, ExpressJS, ReactJS and MongoDB) 
++ Skill NodeJS, ExpressJS and MongoDB 
 + Using Socket IO to create realtime chat room for members of website
 + 2 separates site for user (public) and manager (private, require accounts to access)
 
